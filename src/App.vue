@@ -20,7 +20,7 @@
         <small v-if="form.password.errors.minLength && form.password.touched">Password can't be less then 8</small>
       </div>
 
-      <button class="btn primary" type="submit">Submit</button>
+      <button class="btn primary" type="submit" :disabled="!form.valid">Submit</button>
     </form>
   </div>
 
@@ -52,7 +52,7 @@ export default {
     });
 
     function submit() {
-
+      console.log(form.email.value, form.password.value)
     }
     return {
       form,
