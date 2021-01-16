@@ -5,16 +5,19 @@
       <h1>Auth</h1>
 
       <pre>{{ form.email }}</pre>
-      <div class="form-control">
+      <div class="form-control" :class="{invalid: !form.email.valid && form.email.touched}">
         <label for="email">Email</label>
-        <input type="email" id="email" v-model="form.email.value">
+        <input type="email" id="email" v-model="form.email.value" @blur="form.email.blur">
+        <small v-if="form.email.errors.required && form.email.touched">Email can't be empty</small>
       </div>
 
       <pre>{{ form.password }}</pre>
 
-      <div class="form-control">
+      <div class="form-control" :class="{invalid: !form.password.valid && form.password.touched}">
         <label for="password">Password</label>
-        <input type="password" id="password" v-model="form.password.value">
+        <input type="password" id="password" v-model="form.password.value" @blur="form.password.blur">
+        <small v-if="form.password.errors.required && form.password.touched">Password can't be empty</small>
+        <small v-if="form.password.errors.minLength && form.password.touched">Password can't be less then 8</small>
       </div>
 
       <button class="btn primary" type="submit">Submit</button>
@@ -34,13 +37,13 @@ export default {
   setup() {
     const form = useForm({
       email: {
-        value: 'email@email.com',
+        value: '',
         validators: {
           required
         }
       },
       password: {
-        value: 'my_password',
+        value: '',
         validators: {
           required,
           minLength: minLength(8)
